@@ -57,15 +57,15 @@ type HealthData = {
 };
 
 const COLORS = {
-  primary: '#2196F3',
+  primary: '#003151',           
   secondary: '#4CAF50',
-  background: '#FFFFFF',
-  surface: '#F5F5F5',
-  text: '#212121',
-  disabled: '#BDBDBD',
+  background: '#000000',        
+  surface: '#181A1B',          
+  text: '#FFFFFF',             
+  disabled: '#555555',          
   error: '#F44336',
-  accent: '#673AB7',
-  weight: '#FF9800',
+  accent: '#00B8FF',            
+  weight: '#FFB300',            
   distance: '#8BC34A',
   calories: '#E91E63',
   menstruation: '#EC407A',
@@ -74,10 +74,11 @@ const COLORS = {
   bloodPressure: '#6A1B9A',
   bodyTemperature: '#FFB300',
   speed: '#009688',
-  stepsCadence: '#607D8B',
-  wheelchairPushes: '#607D8B', 
-  vo2Max: '#1976D2', 
+  stepsCadence: '#1976D2',
+  wheelchairPushes: '#1976D2',
+  vo2Max: '#00E676',
 };
+
 
 const App: React.FC = () => {
   const [healthData, setHealthData] = useState<HealthData>({
@@ -98,24 +99,24 @@ const App: React.FC = () => {
     basalMetabolicRate: null,
     bloodGlucose: null,
     bodyFat: null,
-  boneMass: null,
-  cervicalMucus: null,
-  elevationGained: null,
-  exerciseSession: null,
-  floorsClimbed: null,
-    leanBodyMass: null,
-  nutrition: null,
-  ovulationTest: null,
-  oxygenSaturation: null,
-  power: null,
-  respiratoryRate: null,
-  restingHeartRate: null,
-  sexualActivity: null,
-  sexualActivityTimestamp: null,
-  speed: null,
-  stepsCadence: null,
-  vo2Max: null,
-  wheelchairPushes: null,
+    boneMass: null,
+    cervicalMucus: null,
+    elevationGained: null,
+    exerciseSession: null,
+    floorsClimbed: null,
+      leanBodyMass: null,
+    nutrition: null,
+    ovulationTest: null,
+    oxygenSaturation: null,
+    power: null,
+    respiratoryRate: null,
+    restingHeartRate: null,
+    sexualActivity: null,
+    sexualActivityTimestamp: null,
+    speed: null,
+    stepsCadence: null,
+    vo2Max: null,
+    wheelchairPushes: null,
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [pageIndex, setPageIndex] = useState<number>(1000);
@@ -461,244 +462,74 @@ const totalWheelchairPushes = wheelchairPushesResult?.records?.reduce((sum, reco
                   </View>
                 ) : (
                   <ScrollView 
-                    style={styles.dataContainer}
-                    contentContainerStyle={styles.scrollContent}
-                  >
-                    <DataItem
-                      label="Steps"
-                      value={healthData.steps.toLocaleString()}
-                      color={COLORS.secondary}
-                      unit="steps"
-                    />
-                    <DataItem
-                      label="Height"
-                      value={(healthData.height * 100).toFixed(1)}
-                      color={COLORS.primary}
-                      unit="cm"
-                    />
-                    <DataItem
-                      label="Weight"
-                      value={healthData.weight > 0 ? `${healthData.weight.toFixed(1)}` : 'N/A'}
-                      color={COLORS.weight}
-                      unit="kg"
-                    />
-                    <DataItem
-                      label="Sleep"
-                      value={
-                        (() => {
-                          const totalMinutes = Math.round(healthData.sleepDuration * 60);
-                          const hours = Math.floor(totalMinutes / 60);
-                          const minutes = totalMinutes % 60;
-                          return `${hours} hr${hours !== 1 ? 's' : ''} ${minutes} min${minutes !== 1 ? 's' : ''}`;
-                        })()
-                      }
-                      color={COLORS.accent}
-                      unit=""
-                    />
-                    <DataItem
-                      label="Distance"
-                      value={(healthData.distance / 1000).toFixed(2)}
-                      color={COLORS.distance}
-                      unit="km"
-                    />
-                    <DataItem
-                      label="Total Calories Burned"
-                      value={healthData.calories.toFixed(0)}
-                      color={COLORS.calories}
-                      unit="kcal"
-                    />
-                    <DataItem
-                      label="Menstruation Flow"
-                      value={healthData.menstruationFlow || 'N/A'}
-                      color={COLORS.menstruation}
-                      unit=""
-                    />
-                    <DataItem
-                      label="Menstruation Period"
-                      value={healthData.menstruationPeriod || 'N/A'}
-                      color={COLORS.menstruation}
-                      unit=""
-                    />
-                    <DataItem
-                      label="Heart Rate"
-                      value={
-                        healthData.heartRate && healthData.heartRate !== 'No data'
-                          ? `${healthData.heartRate}`
-                          : 'N/A'
-                      }
-                      color={COLORS.heartRate}
-                      unit={healthData.heartRate && healthData.heartRate !== 'No data' ? 'bpm' : ''}
-                    />
-                    <DataItem
-                      label="Hydration"
-                      value={
-                        healthData.hydration !== null && healthData.hydration > 0
-                          ? healthData.hydration.toFixed(2)
-                          : 'N/A'
-                      }
-                      color={COLORS.hydration}
-                      unit="L"
-                    />
-                    <DataItem
-                      label="Blood Pressure"
-                      value={
-                        healthData.bloodPressure &&
-                        healthData.bloodPressure.systolic &&
-                        healthData.bloodPressure.diastolic
-                          ? `${healthData.bloodPressure.systolic}/${healthData.bloodPressure.diastolic}`
-                          : 'N/A'
-                      }
-                      color={COLORS.bloodPressure} 
-                      unit="mmHg"
-                    />
-                    <DataItem
-                      label="Body Temperature"
-                      value={
-                        healthData.bodyTemperature !== null
-                          ? healthData.bodyTemperature.toFixed(1)
-                          : 'N/A'
-                      }
-                      color={COLORS.bodyTemperature}
-                      unit={healthData.bodyTemperature !== null ? '°C' : ''}
-                    />
-                    <DataItem
-                      label="Active Calories"
-                      value={healthData.activeCalories !== null ? healthData.activeCalories.toFixed(0) : 'N/A'}
-                      color="#FF7043"
-                      unit="kcal"
-                    />
-                    <DataItem
-                      label="Basal Body Temp."
-                      value={healthData.basalBodyTemperature !== null ? healthData.basalBodyTemperature.toFixed(1) : 'N/A'}
-                      color="#00B8D4"
-                      unit={healthData.basalBodyTemperature !== null ? '°C' : ''}
-                    />
-                    <DataItem
-                      label="Basal Metabolic Rate"
-                      value={healthData.basalMetabolicRate !== null ? healthData.basalMetabolicRate.toFixed(0) : 'N/A'}
-                      color="#8D6E63"
-                      unit="kcal/day"
-                    />
-                    <DataItem
-                      label="Blood Glucose"
-                      value={healthData.bloodGlucose !== null ? healthData.bloodGlucose.toFixed(2) : 'N/A'}
-                      color="#43A047"
-                      unit="mmol/L"
-                    />
-                    <DataItem
-                      label="Body Fat"
-                      value={healthData.bodyFat !== null ? healthData.bodyFat.toFixed(1) : 'N/A'}
-                      color="#FFB6C1"
-                      unit="%"
-                    />
-                    <DataItem
-                      label="Bone Mass"
-                      value={healthData.boneMass !== null ? healthData.boneMass.toFixed(2) : 'N/A'}
-                      color="#A1887F"
-                      unit="kg"
-                    />
-                    <DataItem
-                      label="Cervical Mucus"
-                      value={healthData.cervicalMucus || 'N/A'}
-                      color="#BA68C8"
-                      unit=""
-                    />
-                    <DataItem
-                      label="Elevation Gained"
-                      value={healthData.elevationGained !== null ? healthData.elevationGained.toFixed(1) : 'N/A'}
-                      color="#90CAF9"
-                      unit="m"
-                    />
-                    <DataItem
-                      label="Exercise Session"
-                      value={healthData.exerciseSession || 'N/A'}
-                      color="#FFD54F"
-                      unit=""
-                    />
-                    <DataItem
-                      label="Floors Climbed"
-                      value={healthData.floorsClimbed !== null ? healthData.floorsClimbed.toString() : 'N/A'}
-                      color="#8D6E63"
-                      unit="floors"
-                    />
-                    <DataItem
-                      label="Lean Body Mass"
-                      value={healthData.leanBodyMass !== null ? healthData.leanBodyMass.toFixed(2) : 'N/A'}
-                      color="#607D8B"
-                      unit="kg"
-                    />
-                    <DataItem
-                      label="Nutrition"
-                      value={healthData.nutrition !== null ? healthData.nutrition : 'N/A'}
-                      color="#FFA726"
-                      unit="kcal"
-                    />
+  style={styles.dataContainer}
+  contentContainerStyle={styles.scrollContent}
+>
+  {/* Activity */}
+  <Text style={styles.sectionHeader}>Activity</Text>
+  <DataItem label="Steps" value={healthData.steps.toLocaleString()} color={COLORS.secondary} unit="steps" />
+  <DataItem label="Distance" value={(healthData.distance / 1000).toFixed(2)} color={COLORS.distance} unit="km" />
+  <DataItem label="Total Calories Burned" value={healthData.calories.toFixed(0)} color={COLORS.calories} unit="kcal" />
+  <DataItem label="Active Calories" value={healthData.activeCalories !== null ? healthData.activeCalories.toFixed(0) : 'N/A'} color="#FF7043" unit="kcal" />
+  <DataItem label="Elevation Gained" value={healthData.elevationGained !== null ? healthData.elevationGained.toFixed(1) : 'N/A'} color="#90CAF9" unit="m" />
+  <DataItem label="Exercise Session" value={healthData.exerciseSession || 'N/A'} color="#FFD54F" unit="" />
+  <DataItem label="Floors Climbed" value={healthData.floorsClimbed !== null ? healthData.floorsClimbed.toString() : 'N/A'} color="#8D6E63" unit="floors" />
+  <DataItem label="Power" value={healthData.power !== null ? healthData.power.toFixed(1) : 'N/A'} color="#FF5722" unit="W" />
+  <DataItem label="Speed" value={healthData.speed !== null ? healthData.speed.toFixed(2) : 'N/A'} color={COLORS.speed} unit="m/s" />
+  <DataItem label="Steps Cadence" value={healthData.stepsCadence !== null ? healthData.stepsCadence.toFixed(0) : 'N/A'} color={COLORS.stepsCadence} unit="spm" />
+  <DataItem label="Wheelchair Pushes" value={healthData.wheelchairPushes !== null ? healthData.wheelchairPushes.toString() : 'N/A'} color={COLORS.wheelchairPushes} unit="pushes" />
 
-                    <DataItem
-                      label="Ovulation Test"
-                      value={healthData.ovulationTest || 'N/A'}
-                      color="#AB47BC"
-                      unit=""
-                    />
-                    <DataItem
-                      label="Oxygen Saturation"
-                      value={healthData.oxygenSaturation !== null ? healthData.oxygenSaturation.toFixed(1) : 'N/A'}
-                      color="#00E676"
-                      unit="%"
-                    />
-                    <DataItem
-                      label="Power"
-                      value={healthData.power !== null ? healthData.power.toFixed(1) : 'N/A'}
-                      color="#FF5722"
-                      unit="W"
-                    />
-                    <DataItem
-                      label="Respiratory Rate"
-                      value={healthData.respiratoryRate !== null ? healthData.respiratoryRate.toFixed(1) : 'N/A'}
-                      color="#26A69A"
-                      unit="breaths/min"
-                    />
-                    <DataItem
-                      label="Resting Heart Rate"
-                      value={healthData.restingHeartRate !== null ? healthData.restingHeartRate.toString() : 'N/A'}
-                      color="#C62828"
-                      unit="bpm"
-                    />
-                    <DataItem
-                      label="Sexual Activity Time"
-                      value={
-                        healthData.sexualActivityTimestamp 
-                          ? new Date(healthData.sexualActivityTimestamp).toLocaleString()
-                          : 'N/A'
-                      }
-                      color="#F06292"
-                      unit=""
-                    />
-                    <DataItem
-                      label="Speed"
-                      value={healthData.speed !== null ? healthData.speed.toFixed(2) : 'N/A'}
-                      color={COLORS.speed}
-                      unit="m/s"
-                    />
-                    <DataItem
-                      label="Steps Cadence"
-                      value={healthData.stepsCadence !== null ? healthData.stepsCadence.toFixed(0) : 'N/A'}
-                      color={COLORS.stepsCadence}
-                      unit="spm" // steps per minute
-                    />
-                    <DataItem
-                      label="VO2 Max"
-                      value={healthData.vo2Max !== null ? healthData.vo2Max.toFixed(1) : 'N/A'}
-                      color={COLORS.vo2Max}
-                      unit="ml/(min·kg)"
-                    />
-                    <DataItem
-                      label="Wheelchair Pushes"
-                      value={healthData.wheelchairPushes !== null ? healthData.wheelchairPushes.toString() : 'N/A'}
-                      color={COLORS.wheelchairPushes}
-                      unit="pushes"
-                    />
-                  </ScrollView>
+  {/* Body Measurements */}
+  <Text style={styles.sectionHeader}>Body Measurements</Text>
+  <DataItem label="Height" value={(healthData.height * 100).toFixed(1)} color={COLORS.primary} unit="cm" />
+  <DataItem label="Weight" value={healthData.weight > 0 ? `${healthData.weight.toFixed(1)}` : 'N/A'} color={COLORS.weight} unit="kg" />
+  <DataItem label="Body Fat" value={healthData.bodyFat !== null ? healthData.bodyFat.toFixed(1) : 'N/A'} color="#FFB6C1" unit="%" />
+  <DataItem label="Lean Body Mass" value={healthData.leanBodyMass !== null ? healthData.leanBodyMass.toFixed(2) : 'N/A'} color="#607D8B" unit="kg" />
+  <DataItem label="Bone Mass" value={healthData.boneMass !== null ? healthData.boneMass.toFixed(2) : 'N/A'} color="#A1887F" unit="kg" />
+
+  {/* Nutrition */}
+  <Text style={styles.sectionHeader}>Nutrition</Text>
+  <DataItem label="Nutrition" value={healthData.nutrition !== null ? healthData.nutrition : 'N/A'} color="#FFA726" unit="kcal" />
+  <DataItem label="Hydration" value={healthData.hydration !== null && healthData.hydration > 0 ? healthData.hydration.toFixed(2) : 'N/A'} color={COLORS.hydration} unit="L" />
+
+  {/* Sleep */}
+  <Text style={styles.sectionHeader}>Sleep</Text>
+  <DataItem
+    label="Sleep"
+    value={
+      (() => {
+        const totalMinutes = Math.round(healthData.sleepDuration * 60);
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        return `${hours} hr${hours !== 1 ? 's' : ''} ${minutes} min${minutes !== 1 ? 's' : ''}`;
+      })()
+    }
+    color={COLORS.accent}
+    unit=""
+  />
+
+  {/* Vitals */}
+  <Text style={styles.sectionHeader}>Vitals</Text>
+  <DataItem label="Heart Rate" value={healthData.heartRate && healthData.heartRate !== 'No data' ? `${healthData.heartRate}` : 'N/A'} color={COLORS.heartRate} unit={healthData.heartRate && healthData.heartRate !== 'No data' ? 'bpm' : ''} />
+  <DataItem label="Resting Heart Rate" value={healthData.restingHeartRate !== null ? healthData.restingHeartRate.toString() : 'N/A'} color="#C62828" unit="bpm" />
+  <DataItem label="Blood Pressure" value={healthData.bloodPressure && healthData.bloodPressure.systolic && healthData.bloodPressure.diastolic ? `${healthData.bloodPressure.systolic}/${healthData.bloodPressure.diastolic}` : 'N/A'} color={COLORS.bloodPressure} unit="mmHg" />
+  <DataItem label="Blood Glucose" value={healthData.bloodGlucose !== null ? healthData.bloodGlucose.toFixed(2) : 'N/A'} color="#43A047" unit="mmol/L" />
+  <DataItem label="Body Temperature" value={healthData.bodyTemperature !== null ? healthData.bodyTemperature.toFixed(1) : 'N/A'} color={COLORS.bodyTemperature} unit={healthData.bodyTemperature !== null ? '°C' : ''} />
+  <DataItem label="Basal Body Temp." value={healthData.basalBodyTemperature !== null ? healthData.basalBodyTemperature.toFixed(1) : 'N/A'} color="#00B8D4" unit={healthData.basalBodyTemperature !== null ? '°C' : ''} />
+  <DataItem label="Basal Metabolic Rate" value={healthData.basalMetabolicRate !== null ? healthData.basalMetabolicRate.toFixed(0) : 'N/A'} color="#8D6E63" unit="kcal/day" />
+  <DataItem label="Oxygen Saturation" value={healthData.oxygenSaturation !== null ? healthData.oxygenSaturation.toFixed(1) : 'N/A'} color="#00E676" unit="%" />
+  <DataItem label="Respiratory Rate" value={healthData.respiratoryRate !== null ? healthData.respiratoryRate.toFixed(1) : 'N/A'} color="#26A69A" unit="breaths/min" />
+  <DataItem label="VO2 Max" value={healthData.vo2Max !== null ? healthData.vo2Max.toFixed(1) : 'N/A'} color={COLORS.vo2Max} unit="ml/(min·kg)" />
+
+  {/* Reproductive Health */}
+  <Text style={styles.sectionHeader}>Reproductive Health</Text>
+  <DataItem label="Menstruation Flow" value={healthData.menstruationFlow || 'N/A'} color={COLORS.menstruation} unit="" />
+  <DataItem label="Menstruation Period" value={healthData.menstruationPeriod || 'N/A'} color={COLORS.menstruation} unit="" />
+  <DataItem label="Ovulation Test" value={healthData.ovulationTest || 'N/A'} color="#AB47BC" unit="" />
+  <DataItem label="Cervical Mucus" value={healthData.cervicalMucus || 'N/A'} color="#BA68C8" unit="" />
+  <DataItem label="Sexual Activity Time" value={healthData.sexualActivityTimestamp ? new Date(healthData.sexualActivityTimestamp).toLocaleString() : 'N/A'} color="#F06292" unit="" />
+</ScrollView>
+
                 )}
               </>
             )}
@@ -741,8 +572,16 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     elevation: 4,
   },
+  sectionHeader: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: COLORS.text,
+    marginTop: 24,
+    marginBottom: 8,
+    opacity: 0.85,
+  },
   headerText: {
-    color: 'white',
+    color: COLORS.text,             // White text
     fontSize: 24,
     fontWeight: '600',
     textAlign: 'center',
@@ -754,6 +593,7 @@ const styles = StyleSheet.create({
   pageContainer: {
     flex: 1,
     padding: 16,
+    backgroundColor: COLORS.background, // Ensure black
   },
   dateHeader: {
     fontSize: 18,
@@ -769,7 +609,7 @@ const styles = StyleSheet.create({
   },
   dataContainer: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.surface, // Dark surface
     borderRadius: 12,
     padding: 16,
   },
@@ -781,7 +621,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#EEE',
+    borderBottomColor: '#222',      // Darker divider
   },
   dataIcon: {
     width: 32,
@@ -795,7 +635,7 @@ const styles = StyleSheet.create({
   dataLabel: {
     fontSize: 16,
     color: COLORS.text,
-    opacity: 0.8,
+    opacity: 0.7,
   },
   dataValue: {
     fontSize: 20,
@@ -805,21 +645,21 @@ const styles = StyleSheet.create({
   },
   dataUnit: {
     fontSize: 16,
-    color: '#666',
+    color: '#8F8F8F',              // Muted grey for units
   },
   footer: {
     padding: 16,
     backgroundColor: COLORS.surface,
     borderTopWidth: 1,
-    borderTopColor: '#EEE',
+    borderTopColor: '#222',
   },
   loader: {
     marginTop: 8,
   },
 });
 
+
 export default App;
 function getHealthRecords(arg0: string) {
   throw new Error('Function not implemented.');
 }
-
